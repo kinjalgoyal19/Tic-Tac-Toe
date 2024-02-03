@@ -27,8 +27,9 @@ boxes.forEach((box) => {
         }
         box.disabled = true;
         counter++;
-        checkWinner();
-        checkDraw();
+        if (checkWinner() || checkDraw()) {
+            counter = 0
+        }
     })
 });
 
@@ -58,11 +59,13 @@ const showWinner = (winner) => {
 }
 
 const checkDraw = () => {
-    if(counter === boxes.length){
+    if(counter%boxes.length === 0){
         p.innerText = "It's a draw."
         cont.classList.remove("hide");
         disabBox();
+        return 1
     }
+    return 0
 }
 
 const checkWinner = ()=> {
@@ -80,9 +83,11 @@ const checkWinner = ()=> {
             if(posVal===pos2Val && pos2Val===pos3Val){
                 // console.log("winner", posVal);
                 showWinner(posVal);
+                return 1
             }
         } 
     }
+    return 0
 };
 
 newBtn.addEventListener("click", rstGame);
